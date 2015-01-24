@@ -1,10 +1,10 @@
 /**
- * Enhanced Select2 Dropmenus
- *
- * @AJAX Mode - When in this mode, your value will be an object (or array of objects) of the data used by Select2
- *     This change is so that you do not have to do an additional query yourself on top of Select2's own query
- * @params [options] {object} The configuration options passed to $.fn.select2(). Refer to the documentation
- */
+* Enhanced Select2 Dropmenus
+*
+* @AJAX Mode - When in this mode, your value will be an object (or array of objects) of the data used by Select2
+*     This change is so that you do not have to do an additional query yourself on top of Select2's own query
+* @params [options] {object} The configuration options passed to $.fn.select2(). Refer to the documentation
+*/
 angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelect2', ['uiSelect2Config', '$timeout', '$parse', function (uiSelect2Config, $timeout, $parse) {
     var options = {};
     if (uiSelect2Config) {
@@ -238,6 +238,11 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                         }
                         elm.prev().toggleClass('ng-pristine', controller.$pristine);
                     }
+
+                    scope.$watch(attrs.uiSelect2, function (opts) {
+                        console.log('watch in select2');
+                        elm.select2(opts);
+                    }, true);
                 });
             };
         }
