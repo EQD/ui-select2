@@ -214,7 +214,9 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                 $timeout(function () {
 
                     scope.$watch(attrs.uiSelect2, function (newVal, oldVal) {
-                        if (!newVal || newVal === oldVal) return;
+                        if (!newVal || newVal === oldVal) {
+                            return;
+                        }
                         elm.select2(newVal);
                     }, true);
 
