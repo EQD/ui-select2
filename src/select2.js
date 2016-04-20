@@ -212,6 +212,12 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
 
                 // Initialize the plugin late so that the injected DOM does not disrupt the template compiler
                 $timeout(function () {
+
+                    scope.$watch(attrs.uiSelect2, function (newVal, oldVal) {
+                        if (!newVal || newVal === oldVal) return;
+                        elm.select2(newVal);
+                    }, true);
+
                     elm.select2(opts);
                     if (attrs.eventHandlers) {
                         var getter = $parse(attrs.eventHandlers);
@@ -220,7 +226,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                             elm.on(event, handler);
                         });
                     }
-                        
+
                     // Set initial value - I'm not sure about this but it seems to need to be there
                     elm.select2('data', controller.$modelValue);
                     // important!
@@ -239,12 +245,11 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                         elm.prev().toggleClass('ng-pristine', controller.$pristine);
                     }
 
-                    scope.$watch(attrs.uiSelect2, function (opts) {
-                        console.log('watch in select2');
-                        elm.select2(opts);
-                    }, true);
+                    //$timeout(function () {
+                    //}, 1000);
                 });
             };
         }
     };
 }]);
+
